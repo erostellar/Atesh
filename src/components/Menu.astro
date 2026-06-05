@@ -1,9 +1,14 @@
 ---
-const totalPages = 16;
-const pages = Array.from({ length: totalPages }, (_, i) => ({
+const standardPages = Array.from({ length: 16 }, (_, i) => ({
   nr: i + 1,
   src: `/images/menu/seite_${String(i + 1).padStart(2, '0')}.jpg`,
   alt: `Speisekarte Seite ${i + 1}`
+}));
+
+const mittagPages = Array.from({ length: 2 }, (_, i) => ({
+  nr: i + 1,
+  src: `/images/menu-mittag/seite_${String(i + 1).padStart(2, '0')}.jpg`,
+  alt: `Mittagskarte Seite ${i + 1}`
 }));
 ---
 
@@ -13,7 +18,7 @@ const pages = Array.from({ length: totalPages }, (_, i) => ({
   <div class="absolute inset-0 bg-cover bg-center"
     style="background-image: url('/images/back.png');"></div>
 
-  <!-- Top blend: two layered gradients for smooth fade -->
+  <!-- Top blend -->
   <div class="absolute top-0 left-0 right-0 pointer-events-none" style="height: 45%;">
     <div class="absolute inset-0" style="background: linear-gradient(to bottom,
       #2C1D14 0%,
@@ -26,7 +31,7 @@ const pages = Array.from({ length: totalPages }, (_, i) => ({
     );"></div>
   </div>
 
-  <!-- Bottom blend: two layered gradients for smooth fade -->
+  <!-- Bottom blend -->
   <div class="absolute bottom-0 left-0 right-0 pointer-events-none" style="height: 45%;">
     <div class="absolute inset-0" style="background: linear-gradient(to top,
       #2C1D14 0%,
@@ -42,51 +47,64 @@ const pages = Array.from({ length: totalPages }, (_, i) => ({
   <div class="relative z-10 max-w-5xl mx-auto">
 
     <!-- Header -->
-    <div class="text-center mb-14 reveal">
+    <div class="text-center mb-10 reveal">
       <p class="section-label">Speisekarte</p>
       <h2 class="mt-3 text-3xl md:text-4xl font-bold text-[#F5F0EB]">Unsere Küche</h2>
       <div class="gold-divider centered"></div>
       <p class="text-[#B8A99A] text-sm mt-2">Von der Tradition inspiriert, mit Leidenschaft zubereitet</p>
     </div>
 
-    <!-- Viewer -->
-    <div class="menu-viewer reveal" data-delay="100">
+    <!-- Tab switcher -->
+    <div class="flex justify-center mb-10 reveal" data-delay="50">
+      <div class="relative flex rounded-sm overflow-hidden" style="border: 1px solid #4A3728; background: #0D0906;">
+        <!-- Sliding indicator -->
+        <div id="tab-indicator" class="absolute top-0 bottom-0 left-0 transition-all duration-300 ease-in-out" style="width: 50%; background: linear-gradient(135deg, #C4953A 0%, #A67C2A 100%);"></div>
 
-      <!-- Main image display -->
+        <button id="tab-standard"
+          class="menu-tab relative z-10 px-8 py-3 text-xs uppercase tracking-[0.15em] font-semibold transition-colors duration-300 cursor-pointer"
+          style="font-family: 'DM Sans', sans-serif; color: #0D0906; min-width: 140px;"
+          data-active="true"
+        >
+          Standard Karte
+        </button>
+
+        <button id="tab-mittag"
+          class="menu-tab relative z-10 px-8 py-3 text-xs uppercase tracking-[0.15em] font-semibold transition-colors duration-300 cursor-pointer"
+          style="font-family: 'DM Sans', sans-serif; color: #B8A99A; min-width: 140px;"
+          data-active="false"
+        >
+          Mittag Karte
+        </button>
+      </div>
+    </div>
+
+    <!-- ─── STANDARD VIEWER ─── -->
+    <div id="viewer-standard" class="menu-viewer reveal" data-delay="100">
+
       <div class="relative rounded-sm shadow-2xl mx-auto" style="max-width: min(560px, 94vw); box-shadow: 0 0 60px rgba(180,180,180,0.12);">
-
-        <!-- Page image + overlay buttons -->
         <div class="relative">
           <img
-            id="menu-main-img"
-            src={pages[0].src}
-            alt={pages[0].alt}
+            id="std-main-img"
+            src={standardPages[0].src}
+            alt={standardPages[0].alt}
             class="w-full block rounded-sm"
             style="max-height: 88vh; object-fit: contain;"
           />
 
-          <!-- Prev button — on top of image -->
-          <button
-            id="menu-prev"
-            aria-label="Vorherige Seite"
+          <button id="std-prev" aria-label="Vorherige Seite"
             class="absolute left-3 top-1/2 -translate-y-1/2 flex items-center justify-center
               text-white/60 hover:text-white transition-colors duration-200 cursor-pointer
-              disabled:opacity-15 disabled:cursor-not-allowed z-10"
-          >
+              disabled:opacity-15 disabled:cursor-not-allowed z-10">
             <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
               style="filter: drop-shadow(0 1px 4px rgba(0,0,0,0.8));">
               <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
             </svg>
           </button>
 
-          <!-- Next button — on top of image -->
-          <button
-            id="menu-next"
-            aria-label="Nächste Seite"
+          <button id="std-next" aria-label="Nächste Seite"
             class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center
               text-white/60 hover:text-white transition-colors duration-200 cursor-pointer
-              disabled:opacity-15 disabled:cursor-not-allowed z-10"
-          >
+              disabled:opacity-15 disabled:cursor-not-allowed z-10">
             <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
               style="filter: drop-shadow(0 1px 4px rgba(0,0,0,0.8));">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
@@ -94,156 +112,248 @@ const pages = Array.from({ length: totalPages }, (_, i) => ({
           </button>
         </div>
 
-        <!-- Page counter bar -->
         <div class="flex items-center justify-center gap-4 py-4 border-t border-[#4A3728]/50 bg-[#150E09]">
           <span class="text-[#B8A99A] text-xs tracking-widest uppercase font-['DM_Sans']">
-            Seite <span id="menu-current-page">1</span> / {totalPages}
+            Seite <span id="std-current-page">1</span> / {standardPages.length}
           </span>
-          <!-- Progress bar -->
           <div class="flex-1 max-w-40 h-px bg-[#4A3728]">
-            <div id="menu-progress" class="h-full bg-[#C4953A] transition-all duration-300" style="width: 6.25%"></div>
+            <div id="std-progress" class="h-full bg-[#C4953A] transition-all duration-300" style={`width: ${100 / standardPages.length}%`}></div>
           </div>
         </div>
       </div>
 
-      <!-- Thumbnail toggle button -->
       <div class="flex justify-center mt-4">
-        <button id="thumbs-toggle" aria-label="Seitenübersicht anzeigen"
+        <button id="std-thumbs-toggle" aria-label="Seitenübersicht anzeigen"
           class="flex items-center gap-2 text-[#B8A99A] hover:text-[#C4953A] transition-colors duration-200 text-xs uppercase tracking-widest font-['DM_Sans']">
-          <span id="thumbs-toggle-label">Alle Seiten anzeigen</span>
-          <svg id="thumbs-toggle-icon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+          <span id="std-thumbs-toggle-label">Alle Seiten anzeigen</span>
+          <svg id="std-thumbs-toggle-icon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
             style="transition: transform 0.3s ease;">
             <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
           </svg>
         </button>
       </div>
 
-      <!-- Thumbnail strip -->
-      <div id="thumbs-wrapper" style="max-height: 0; overflow: hidden; transition: max-height 0.4s ease;">
+      <div id="std-thumbs-wrapper" style="max-height: 0; overflow: hidden; transition: max-height 0.4s ease;">
         <div class="mt-4 relative">
-          <div id="menu-thumbs" class="flex gap-2 overflow-x-auto pb-2 scroll-smooth" style="scrollbar-width: thin; scrollbar-color: #4A3728 #0D0906;">
-            {pages.map((p) => (
+          <div id="std-menu-thumbs" class="flex gap-2 overflow-x-auto pb-2 scroll-smooth" style="scrollbar-width: thin; scrollbar-color: #4A3728 #0D0906;">
+            {standardPages.map((p) => (
               <button
-                class="menu-thumb flex-shrink-0 w-16 md:w-20 rounded-sm overflow-hidden border-2 transition-all duration-200 opacity-50 hover:opacity-80"
+                class="std-thumb flex-shrink-0 w-16 md:w-20 rounded-sm overflow-hidden border-2 transition-all duration-200 opacity-50 hover:opacity-80"
                 data-page={p.nr}
                 data-src={p.src}
                 data-alt={p.alt}
                 style="border-color: transparent;"
                 aria-label={`Seite ${p.nr}`}
               >
-                <img
-                  src={p.src}
-                  alt={p.alt}
-                  class="w-full aspect-[3/4] object-cover"
-                  loading="lazy"
-                />
+                <img src={p.src} alt={p.alt} class="w-full aspect-[3/4] object-cover" loading="lazy" />
               </button>
             ))}
           </div>
         </div>
       </div>
-
-
     </div>
+
+    <!-- ─── MITTAG VIEWER ─── -->
+    <div id="viewer-mittag" class="menu-viewer reveal hidden" data-delay="100">
+
+      <div class="relative rounded-sm shadow-2xl mx-auto" style="max-width: min(560px, 94vw); box-shadow: 0 0 60px rgba(180,180,180,0.12);">
+        <div class="relative">
+          <img
+            id="mit-main-img"
+            src={mittagPages[0].src}
+            alt={mittagPages[0].alt}
+            class="w-full block rounded-sm"
+            style="max-height: 88vh; object-fit: contain;"
+          />
+
+          <button id="mit-prev" aria-label="Vorherige Seite"
+            class="absolute left-3 top-1/2 -translate-y-1/2 flex items-center justify-center
+              text-white/60 hover:text-white transition-colors duration-200 cursor-pointer
+              disabled:opacity-15 disabled:cursor-not-allowed z-10">
+            <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+              style="filter: drop-shadow(0 1px 4px rgba(0,0,0,0.8));">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+            </svg>
+          </button>
+
+          <button id="mit-next" aria-label="Nächste Seite"
+            class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center
+              text-white/60 hover:text-white transition-colors duration-200 cursor-pointer
+              disabled:opacity-15 disabled:cursor-not-allowed z-10">
+            <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+              style="filter: drop-shadow(0 1px 4px rgba(0,0,0,0.8));">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="flex items-center justify-center gap-4 py-4 border-t border-[#4A3728]/50 bg-[#150E09]">
+          <span class="text-[#B8A99A] text-xs tracking-widest uppercase font-['DM_Sans']">
+            Seite <span id="mit-current-page">1</span> / {mittagPages.length}
+          </span>
+          <div class="flex-1 max-w-40 h-px bg-[#4A3728]">
+            <div id="mit-progress" class="h-full bg-[#C4953A] transition-all duration-300" style={`width: ${100 / mittagPages.length}%`}></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-center mt-4">
+        <button id="mit-thumbs-toggle" aria-label="Seitenübersicht anzeigen"
+          class="flex items-center gap-2 text-[#B8A99A] hover:text-[#C4953A] transition-colors duration-200 text-xs uppercase tracking-widest font-['DM_Sans']">
+          <span id="mit-thumbs-toggle-label">Alle Seiten anzeigen</span>
+          <svg id="mit-thumbs-toggle-icon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+            style="transition: transform 0.3s ease;">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </button>
+      </div>
+
+      <div id="mit-thumbs-wrapper" style="max-height: 0; overflow: hidden; transition: max-height 0.4s ease;">
+        <div class="mt-4 relative">
+          <div id="mit-menu-thumbs" class="flex gap-2 overflow-x-auto pb-2 scroll-smooth" style="scrollbar-width: thin; scrollbar-color: #4A3728 #0D0906;">
+            {mittagPages.map((p) => (
+              <button
+                class="mit-thumb flex-shrink-0 w-16 md:w-20 rounded-sm overflow-hidden border-2 transition-all duration-200 opacity-50 hover:opacity-80"
+                data-page={p.nr}
+                data-src={p.src}
+                data-alt={p.alt}
+                style="border-color: transparent;"
+                aria-label={`Seite ${p.nr}`}
+              >
+                <img src={p.src} alt={p.alt} class="w-full aspect-[3/4] object-cover" loading="lazy" />
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
 <style>
-  #menu-thumbs::-webkit-scrollbar { height: 4px; }
-  #menu-thumbs::-webkit-scrollbar-track { background: #0D0906; }
-  #menu-thumbs::-webkit-scrollbar-thumb { background: #4A3728; border-radius: 2px; }
+  .menu-viewer { transition: opacity 0.25s ease; }
+  .menu-viewer.hidden { display: none; }
 
-  .menu-thumb[data-active="true"] {
+  #std-menu-thumbs::-webkit-scrollbar,
+  #mit-menu-thumbs::-webkit-scrollbar { height: 4px; }
+  #std-menu-thumbs::-webkit-scrollbar-track,
+  #mit-menu-thumbs::-webkit-scrollbar-track { background: #0D0906; }
+  #std-menu-thumbs::-webkit-scrollbar-thumb,
+  #mit-menu-thumbs::-webkit-scrollbar-thumb { background: #4A3728; border-radius: 2px; }
+
+  .std-thumb[data-active="true"],
+  .mit-thumb[data-active="true"] {
     opacity: 1 !important;
     border-color: #C4953A !important;
   }
 </style>
 
 <script>
-  const mainImg = document.getElementById('menu-main-img') as HTMLImageElement;
-  const prevBtn = document.getElementById('menu-prev') as HTMLButtonElement;
-  const nextBtn = document.getElementById('menu-next') as HTMLButtonElement;
-  const currentPageEl = document.getElementById('menu-current-page')!;
-  const progressBar = document.getElementById('menu-progress') as HTMLElement;
-  const thumbs = document.querySelectorAll<HTMLButtonElement>('.menu-thumb');
+  // ─── Tab switching ───
+  const tabStandard = document.getElementById('tab-standard')!;
+  const tabMittag   = document.getElementById('tab-mittag')!;
+  const indicator   = document.getElementById('tab-indicator') as HTMLElement;
+  const viewerStd   = document.getElementById('viewer-standard')!;
+  const viewerMit   = document.getElementById('viewer-mittag')!;
 
-  const total = thumbs.length;
-  let current = 0;
-
-  function goTo(index: number) {
-    if (index < 0 || index >= total) return;
-
-    // Update active thumb
-    thumbs[current].dataset.active = 'false';
-    current = index;
-    thumbs[current].dataset.active = 'true';
-
-    // Update main image with fade
-    mainImg.style.opacity = '0';
-    mainImg.style.transition = 'opacity 0.2s ease';
-    setTimeout(() => {
-      mainImg.src = thumbs[current].dataset.src!;
-      mainImg.alt = thumbs[current].dataset.alt!;
-      mainImg.style.opacity = '1';
-    }, 150);
-
-    // Update counter & progress
-    currentPageEl.textContent = String(current + 1);
-    progressBar.style.width = `${((current + 1) / total) * 100}%`;
-
-    // Update buttons
-    prevBtn.disabled = current === 0;
-    nextBtn.disabled = current === total - 1;
-
-    // Scroll thumb into view only when strip is visible
-    if (thumbsOpen) {
-      thumbs[current].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  function activateTab(tab: 'standard' | 'mittag') {
+    if (tab === 'standard') {
+      indicator.style.left = '0%';
+      tabStandard.style.color = '#0D0906';
+      tabMittag.style.color   = '#B8A99A';
+      viewerStd.classList.remove('hidden');
+      viewerMit.classList.add('hidden');
+    } else {
+      indicator.style.left = '50%';
+      tabMittag.style.color   = '#0D0906';
+      tabStandard.style.color = '#B8A99A';
+      viewerMit.classList.remove('hidden');
+      viewerStd.classList.add('hidden');
     }
   }
 
-  // Init
-  thumbs[0].dataset.active = 'true';
-  prevBtn.disabled = true;
+  tabStandard.addEventListener('click', () => activateTab('standard'));
+  tabMittag.addEventListener('click',   () => activateTab('mittag'));
 
-  // Thumb clicks
-  thumbs.forEach((thumb, i) => {
-    thumb.addEventListener('click', () => goTo(i));
-  });
+  // ─── Generic viewer factory ───
+  function initViewer(prefix: string) {
+    const mainImg  = document.getElementById(`${prefix}-main-img`) as HTMLImageElement;
+    const prevBtn  = document.getElementById(`${prefix}-prev`) as HTMLButtonElement;
+    const nextBtn  = document.getElementById(`${prefix}-next`) as HTMLButtonElement;
+    const pageEl   = document.getElementById(`${prefix}-current-page`)!;
+    const progress = document.getElementById(`${prefix}-progress`) as HTMLElement;
+    const thumbs   = document.querySelectorAll<HTMLButtonElement>(`.${prefix}-thumb`);
+    const total    = thumbs.length;
+    let current    = 0;
 
-  prevBtn.addEventListener('click', () => goTo(current - 1));
-  nextBtn.addEventListener('click', () => goTo(current + 1));
+    function goTo(index: number) {
+      if (index < 0 || index >= total) return;
+      thumbs[current].dataset.active = 'false';
+      current = index;
+      thumbs[current].dataset.active = 'true';
 
-  // Keyboard navigation
+      mainImg.style.opacity = '0';
+      mainImg.style.transition = 'opacity 0.2s ease';
+      setTimeout(() => {
+        mainImg.src = thumbs[current].dataset.src!;
+        mainImg.alt = thumbs[current].dataset.alt!;
+        mainImg.style.opacity = '1';
+      }, 150);
+
+      pageEl.textContent = String(current + 1);
+      progress.style.width = `${((current + 1) / total) * 100}%`;
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current === total - 1;
+
+      if (thumbsOpen) {
+        thumbs[current].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }
+
+    thumbs[0].dataset.active = 'true';
+    prevBtn.disabled = true;
+
+    thumbs.forEach((thumb, i) => thumb.addEventListener('click', () => goTo(i)));
+    prevBtn.addEventListener('click', () => goTo(current - 1));
+    nextBtn.addEventListener('click', () => goTo(current + 1));
+
+    // Thumbnail toggle
+    const toggle      = document.getElementById(`${prefix}-thumbs-toggle`)!;
+    const wrapper     = document.getElementById(`${prefix}-thumbs-wrapper`) as HTMLElement;
+    const icon        = document.getElementById(`${prefix}-thumbs-toggle-icon`) as HTMLElement;
+    const label       = document.getElementById(`${prefix}-thumbs-toggle-label`)!;
+    let thumbsOpen    = false;
+
+    toggle.addEventListener('click', () => {
+      thumbsOpen = !thumbsOpen;
+      wrapper.style.maxHeight = thumbsOpen ? '200px' : '0';
+      icon.style.transform = thumbsOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+      label.textContent = thumbsOpen ? 'Alle Seiten ausblenden' : 'Alle Seiten anzeigen';
+    });
+
+    // Swipe
+    let touchStartX = 0;
+    mainImg.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    mainImg.addEventListener('touchend', (e) => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 40) goTo(diff > 0 ? current + 1 : current - 1);
+    });
+  }
+
+  initViewer('std');
+  initViewer('mit');
+
+  // Keyboard nav (only active viewer)
   document.addEventListener('keydown', (e) => {
     const menuSection = document.getElementById('menu');
     if (!menuSection) return;
     const rect = menuSection.getBoundingClientRect();
-    const inView = rect.top < window.innerHeight && rect.bottom > 0;
-    if (!inView) return;
-
-    if (e.key === 'ArrowLeft') goTo(current - 1);
-    if (e.key === 'ArrowRight') goTo(current + 1);
-  });
-
-  // Thumbnail toggle
-  const thumbsToggle = document.getElementById('thumbs-toggle')!;
-  const thumbsWrapper = document.getElementById('thumbs-wrapper') as HTMLElement;
-  const thumbsIcon = document.getElementById('thumbs-toggle-icon') as HTMLElement;
-  const thumbsLabel = document.getElementById('thumbs-toggle-label')!;
-  let thumbsOpen = false;
-
-  thumbsToggle.addEventListener('click', () => {
-    thumbsOpen = !thumbsOpen;
-    thumbsWrapper.style.maxHeight = thumbsOpen ? '200px' : '0';
-    thumbsIcon.style.transform = thumbsOpen ? 'rotate(180deg)' : 'rotate(0deg)';
-    thumbsLabel.textContent = thumbsOpen ? 'Alle Seiten ausblenden' : 'Alle Seiten anzeigen';
-  });
-
-  // Touch/swipe support
-  let touchStartX = 0;
-  mainImg.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
-  mainImg.addEventListener('touchend', (e) => {
-    const diff = touchStartX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 40) goTo(diff > 0 ? current + 1 : current - 1);
+    if (rect.top >= window.innerHeight || rect.bottom <= 0) return;
+    const activePrefix = viewerStd.classList.contains('hidden') ? 'mit' : 'std';
+    const prev = document.getElementById(`${activePrefix}-prev`) as HTMLButtonElement;
+    const next = document.getElementById(`${activePrefix}-next`) as HTMLButtonElement;
+    if (e.key === 'ArrowLeft') prev.click();
+    if (e.key === 'ArrowRight') next.click();
   });
 </script>
