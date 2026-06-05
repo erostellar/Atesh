@@ -1,0 +1,71 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+---
+
+<Layout title="Kontakt — ATESH Grill & Restaurant">
+  <Navbar />
+
+  <main class="bg-[#2C1D14] min-h-screen pt-32 pb-24 px-6">
+    <div class="max-w-3xl mx-auto">
+
+      <a href="/" class="text-[#C4953A] text-sm hover:underline mb-10 inline-block">
+        ← Zurück zur Startseite
+      </a>
+
+      <h1 class="text-4xl font-bold text-[#F5F0EB] mb-3">Kontakt</h1>
+      <div class="gold-divider mb-10"></div>
+
+      <div class="space-y-10 text-[#B8A99A] leading-relaxed">
+
+        <div>
+          <h2 class="text-[#C4953A] text-xs uppercase tracking-widest font-semibold mb-3">Adresse</h2>
+          <p class="text-[#F5F0EB]">ATESH Grill & Restaurant</p>
+          <p>Vegesacker Straße 16-18</p>
+          <p>28217 Bremen</p>
+        </div>
+
+        <div>
+          <h2 class="text-[#C4953A] text-xs uppercase tracking-widest font-semibold mb-3">Telefon</h2>
+          <a href="tel:+4942117241862" class="text-[#F5F0EB] text-xl font-semibold hover:text-[#C4953A] transition-colors duration-300 num">
+            0421 17241862
+          </a>
+        </div>
+
+        <div>
+          <h2 class="text-[#C4953A] text-xs uppercase tracking-widest font-semibold mb-3">E-Mail</h2>
+          <a href="mailto:info@atesh-bremen.de" class="text-[#F5F0EB] hover:text-[#C4953A] transition-colors duration-300">
+            info@atesh-bremen.de
+          </a>
+        </div>
+
+        <div>
+          <h2 class="text-[#C4953A] text-xs uppercase tracking-widest font-semibold mb-3">Öffnungszeiten</h2>
+          <p class="text-[#F5F0EB]">Montag bis Sonntag</p>
+          <p class="num">12:00 - 00:00 Uhr</p>
+        </div>
+
+        <div>
+          <h2 class="text-[#C4953A] text-xs uppercase tracking-widest font-semibold mb-4">Anfahrt</h2>
+          <div class="w-full rounded-sm overflow-hidden border border-[#4A3728]" style="height: 320px;">
+            <div
+              class="maps-placeholder"
+              style="width:100%;height:320px;"
+              data-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2392.5!2d8.7895!3d53.1305!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47b12789c72c91b3%3A0x1!2sVegesacker+Stra%C3%9Fe+16-18%2C+28217+Bremen!5e0!3m2!1sde!2sde!4v1"
+              data-filter="grayscale(0.4) invert(0.9) hue-rotate(180deg) brightness(0.85)"
+            >
+              <div style="width:100%;height:320px;background:#1A110C;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.75rem;cursor:pointer;">
+                <svg width="28" height="28" fill="none" stroke="#C4953A" stroke-width="1.5" viewBox="0 0 24 24">
+                  <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+                </svg>
+                <p style="font-family:'DM Sans',sans-serif;font-size:0.75rem;color:#B8A99A;letter-spacing:0.1em;text-transform:uppercase;margin:0;">Karte laden</p>
+                <p style="font-family:'DM Sans',sans-serif;font-size:0.65rem;color:#4A3728;margin:0;">Google Maps — Klicken zum Aktivieren</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+</Layout>

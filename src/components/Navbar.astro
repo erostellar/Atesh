@@ -1,0 +1,187 @@
+---
+---
+
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="/" class="flex items-center">
+      <img src="/images/logo.png" alt="ATESH Grill & Restaurant" class="h-14 w-auto" />
+    </a>
+
+    <!-- Desktop Nav -->
+    <ul class="hidden md:flex items-center gap-8">
+      <li><a href="/#about" class="nav-link">Über uns</a></li>
+      <li><a href="/#menu" class="nav-link">Speisekarte</a></li>
+      <li><a href="/#gallery" class="nav-link">Galerie</a></li>
+      <li><a href="/kontakt" class="nav-link">Kontakt</a></li>
+      <li>
+        <a href="/#reservation" class="nav-btn">
+          Reservieren
+        </a>
+      </li>
+    </ul>
+
+    <!-- Hamburger -->
+    <button id="menu-toggle" class="md:hidden flex flex-col gap-1.5 p-2" aria-label="Menü öffnen">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Overlay -->
+<div id="mobile-menu" class="fixed inset-0 z-40 bg-[#1A110C]/97 backdrop-blur-md flex flex-col items-center justify-center
+  opacity-0 pointer-events-none transition-all duration-400">
+  <ul class="flex flex-col items-center gap-10">
+    <li><a href="/#about" class="mobile-nav-link">Über uns</a></li>
+    <li><a href="/#menu" class="mobile-nav-link">Speisekarte</a></li>
+    <li><a href="/#gallery" class="mobile-nav-link">Galerie</a></li>
+    <li><a href="/kontakt" class="mobile-nav-link">Kontakt</a></li>
+    <li><a href="/#reservation" class="mobile-nav-link text-[#C4953A]">Reservieren</a></li>
+  </ul>
+  <p class="mt-16 text-[#B8A99A] text-xs tracking-widest uppercase">MO - SO · 12:00 - 00:00</p>
+</div>
+
+<style>
+  .nav-link {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #B8A99A;
+    text-decoration: none;
+    transition: color 0.25s;
+  }
+  .nav-link:hover {
+    color: #C4953A;
+  }
+  .nav-btn {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #1A110C;
+    background: #C4953A;
+    padding: 0.5rem 1.25rem;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: background 0.25s;
+  }
+  .nav-btn:hover {
+    background: #d4a84a;
+  }
+  .hamburger-line {
+    display: block;
+    width: 26px;
+    height: 2px;
+    background: #C4953A;
+    transition: all 0.3s;
+  }
+  .mobile-nav-link {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #F5F0EB;
+    text-decoration: none;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.25s;
+  }
+  .mobile-nav-link:hover {
+    color: #C4953A;
+  }
+  #navbar {
+    transform: translateY(0);
+    transition: transform 0.4s ease, background 0.5s ease, box-shadow 0.5s ease;
+  }
+  #navbar.hidden-nav {
+    transform: translateY(-100%);
+  }
+  #navbar.scrolled {
+    background: rgba(26, 17, 12, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 1px 0 rgba(196, 149, 58, 0.15);
+  }
+  #mobile-menu.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+</style>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  const toggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  // Scroll → solid navbar + auto-hide after 1s of no scrolling
+  let hideTimer: ReturnType<typeof setTimeout> | null = null;
+
+  function showNavbar() {
+    navbar?.classList.remove('hidden-nav');
+  }
+  function scheduleHide() {
+    if (hideTimer) clearTimeout(hideTimer);
+    // Don't hide when mobile menu is open
+    if (mobileMenu?.classList.contains('open')) return;
+    hideTimer = setTimeout(() => {
+      if (window.scrollY > 80) navbar?.classList.add('hidden-nav');
+    }, 1000);
+  }
+
+  window.addEventListener('scroll', () => {
+    showNavbar();
+    if (window.scrollY > 80) {
+      navbar?.classList.add('scrolled');
+    } else {
+      navbar?.classList.remove('scrolled');
+    }
+    scheduleHide();
+  }, { passive: true });
+
+  // Mobile toggle
+  toggle?.addEventListener('click', () => {
+    mobileMenu?.classList.toggle('open');
+    // Keep navbar visible while menu is open
+    if (mobileMenu?.classList.contains('open')) {
+      showNavbar();
+      if (hideTimer) clearTimeout(hideTimer);
+    }
+  });
+
+  // Close on link click
+  mobileMenu?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+    });
+  });
+
+  // Smooth scroll with navbar offset (for same-page anchor links)
+  document.querySelectorAll('a[href^="/#"]').forEach(anchor => {
+    anchor.addEventListener('click', (e) => {
+      const href = (anchor as HTMLAnchorElement).getAttribute('href');
+      if (!href) return;
+      const hash = href.slice(1); // "/#about" → "#about"
+      const target = document.querySelector(hash);
+      if (target) {
+        e.preventDefault();
+        const offset = 80;
+        const top = target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+
+  // On page load, scroll to hash if present (e.g. navigated from /kontakt → /#about)
+  if (window.location.hash) {
+    const target = document.querySelector(window.location.hash);
+    if (target) {
+      setTimeout(() => {
+        const offset = 80;
+        const top = target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }, 100);
+    }
+  }
+</script>

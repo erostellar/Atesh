@@ -1,0 +1,155 @@
+---
+---
+
+<div id="cookie-banner" class="cookie-banner" role="dialog" aria-label="Cookie-Einwilligung">
+  <div class="cookie-inner">
+    <div class="cookie-text">
+      <p class="cookie-title">Datenschutzhinweis</p>
+      <p class="cookie-body">
+        Diese Website verwendet Google Maps zur Kartendarstellung. Dabei werden Daten (u.a. Ihre IP-Adresse)
+        an Google LLC in den USA übertragen. Mit Klick auf <strong>„Akzeptieren"</strong> stimmen Sie dem zu.
+        Mehr in unserer <a href="/datenschutz">Datenschutzerklärung</a>.
+      </p>
+    </div>
+    <div class="cookie-actions">
+      <button id="cookie-reject" class="btn-reject">Ablehnen</button>
+      <button id="cookie-accept" class="btn-accept">Akzeptieren</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    background: #140D08;
+    border-top: 1px solid #C4953A33;
+    padding: 1.25rem 1.5rem;
+    transform: translateY(100%);
+    transition: transform 0.4s ease;
+  }
+  .cookie-banner.visible {
+    transform: translateY(0);
+  }
+  .cookie-inner {
+    max-width: 64rem;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    justify-content: space-between;
+  }
+  .cookie-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #C4953A;
+    margin: 0 0 0.35rem 0;
+  }
+  .cookie-body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    color: #B8A99A;
+    margin: 0;
+    line-height: 1.6;
+    max-width: 680px;
+  }
+  .cookie-body a {
+    color: #C4953A;
+    text-decoration: underline;
+  }
+  .cookie-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+  .btn-reject {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #B8A99A;
+    background: transparent;
+    border: 1px solid #4A3728;
+    padding: 0.6rem 1.25rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-reject:hover {
+    border-color: #B8A99A;
+    color: #F5F0EB;
+  }
+  .btn-accept {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #1A110C;
+    background: #C4953A;
+    border: 1px solid #C4953A;
+    padding: 0.6rem 1.25rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-accept:hover {
+    background: #d4a84a;
+  }
+</style>
+
+<script>
+  const banner = document.getElementById('cookie-banner');
+  const consent = localStorage.getItem('maps-consent');
+
+  if (!consent) {
+    setTimeout(() => banner?.classList.add('visible'), 600);
+  }
+
+  document.getElementById('cookie-accept')?.addEventListener('click', () => {
+    localStorage.setItem('maps-consent', 'accepted');
+    banner?.classList.remove('visible');
+    // Activate all pending maps
+    document.querySelectorAll('.maps-placeholder').forEach(el => loadMap(el as HTMLElement));
+  });
+
+  document.getElementById('cookie-reject')?.addEventListener('click', () => {
+    localStorage.setItem('maps-consent', 'rejected');
+    banner?.classList.remove('visible');
+  });
+
+  function loadMap(placeholder: HTMLElement) {
+    const src = placeholder.dataset.src;
+    if (!src) return;
+    const iframe = document.createElement('iframe');
+    iframe.src = src;
+    iframe.width = '100%';
+    iframe.height = '100%';
+    iframe.style.border = '0';
+    iframe.style.filter = placeholder.dataset.filter || '';
+    iframe.setAttribute('allowfullscreen', '');
+    iframe.setAttribute('loading', 'lazy');
+    iframe.setAttribute('referrerpolicy', 'no-referrer-when-downgrade');
+    placeholder.replaceWith(iframe);
+  }
+
+  // Auto-load maps if already accepted
+  if (consent === 'accepted') {
+    document.querySelectorAll('.maps-placeholder').forEach(el => loadMap(el as HTMLElement));
+  }
+
+  // Click-to-load for rejected/no-consent users
+  document.querySelectorAll('.maps-placeholder').forEach(el => {
+    el.addEventListener('click', () => {
+      localStorage.setItem('maps-consent', 'accepted');
+      banner?.classList.remove('visible');
+      loadMap(el as HTMLElement);
+    });
+  });
+</script>

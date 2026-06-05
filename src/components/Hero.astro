@@ -1,0 +1,62 @@
+---
+---
+
+<section id="hero" class="relative w-full h-screen overflow-hidden flex items-center justify-center">
+  <!-- Background Video -->
+  <video
+    class="absolute inset-0 w-full h-full object-cover"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="metadata"
+    poster="/images/innen-dunkel.jpeg"
+    style="filter: blur(2px) brightness(0.55);"
+  >
+    <source src="/video/hero.mp4" type="video/mp4" />
+  </video>
+
+  <!-- Gradient Overlay -->
+  <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(26,17,12,0.55) 0%, rgba(26,17,12,0.75) 100%);"></div>
+
+  <!-- Content -->
+  <div class="relative z-10 text-center px-6 flex flex-col items-center">
+    <!-- Logo -->
+    <div class="hero-logo">
+      <img
+        src="/images/logo.png"
+        alt="ATESH Grill & Restaurant"
+        class="w-80 md:w-[26rem] mx-auto"
+        style="filter: drop-shadow(0 4px 24px rgba(196,149,58,0.2));"
+      />
+    </div>
+
+    <!-- Subtitle -->
+    <p class="hero-sub mt-5 text-[#B8A99A] text-sm md:text-base tracking-[0.35em] uppercase font-['DM_Sans']">
+      Modern Turkish · Steakhouse · Bremen
+    </p>
+
+    <!-- Slogan -->
+    <p class="hero-slogan mt-7 font-['Playfair_Display'] italic text-[#C4953A] text-2xl md:text-3xl">
+      Taste the difference
+    </p>
+
+    <!-- CTA -->
+    <div class="hero-cta mt-10">
+      <a
+        href="#reservation"
+        class="inline-block border border-[#C4953A] text-[#C4953A] text-sm tracking-[0.2em] uppercase font-semibold
+          px-10 py-4 transition-all duration-300 hover:bg-[#C4953A] hover:text-[#1A110C]"
+      >
+        Tisch reservieren
+      </a>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 hero-scroll">
+    <svg class="text-[#B8A99A] opacity-60" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+    </svg>
+  </div>
+</section>

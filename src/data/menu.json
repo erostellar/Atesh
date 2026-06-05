@@ -1,0 +1,70 @@
+{
+  "categories": [
+    {
+      "name": "Vorspeisen",
+      "items": [
+        { "nr": "1", "name": "Sigara Böregi", "description": "Blätterteig mit Schafskäse", "price": "6,90", "highlight": true },
+        { "nr": "2", "name": "Karisik Kizartma", "description": "Gemüse mit Joghurtsauce", "price": "7,90" },
+        { "nr": "4", "name": "Cacik", "description": "Gurken mit Dill in Joghurt", "price": "6,90" },
+        { "nr": "5", "name": "Humus", "description": "Kichererbsenpüree", "price": "6,90", "image": "/images/hummus.webp" },
+        { "nr": "6", "name": "Karatas Peynir Ezmesi", "description": "Basilikum, Pistazien, Schafskäse", "price": "6,90" },
+        { "nr": "7", "name": "Köz Patlicanli Aci Nazik", "description": "Auberginen mit Joghurt und Chili", "price": "6,90" },
+        { "nr": "", "name": "Piemientos", "description": "Bratpaprika", "price": "6,90" },
+        { "nr": "", "name": "Tereyagli Karides", "description": "Gebratene Scampis in Knoblauch-Buttersauce mit getrockneten Tomaten, Paprika und Champignons nach Anatolischer Art", "price": "13,90" },
+        { "nr": "", "name": "Atesh Mezze", "description": "Gemischter Vorspeisenteller, warm und kalt", "price": "14,90", "highlight": true }
+      ]
+    },
+    {
+      "name": "Salate",
+      "items": [
+        { "nr": "8",  "name": "Chicken Salat",   "description": "Wildkräuter, Champignons, Hähnchen",        "price": "12,90" },
+        { "nr": "9",  "name": "Gavurdagi Salat",  "description": "Paprika, Granatapfel, Walnüsse",             "price": "10,90" },
+        { "nr": "10", "name": "Coban Salat",      "description": "Tomaten, Gurken, Zwiebeln, Rucola",          "price": "10,90" },
+        { "nr": "11", "name": "Fit Salat",        "description": "Wildkräuter, Käse, Balsamico",               "price": "12,90" },
+        { "nr": "12", "name": "Exotic Salat",     "description": "Apfel, Beeren, Käse, Nüsse, Sprossen",       "price": "13,90" }
+      ]
+    },
+    {
+      "name": "Hauptgerichte",
+      "items": [
+        { "nr": "13", "name": "Atesh Teller",     "description": "Lammsteak, Hähnchen, Lammkarree, Rinderfilet",             "price": "23,90", "highlight": true },
+        { "nr": "14", "name": "Pirzola",          "description": "Lammkarree mit Pimientos und Tomaten",                     "price": "24,90" },
+        { "nr": "15", "name": "Kuzu File",        "description": "Lammfilet mit Pimientos und Tomaten",                      "price": "27,90", "image": "/images/kuzu_file.webp" },
+        { "nr": "16", "name": "Kuzu Sis",         "description": "Mariniertes Lammsteak",                                    "price": "21,90" },
+        { "nr": "17", "name": "Adana Kebap",      "description": "Lammhackfleischspieß",                                     "price": "17,90", "image": "/images/adana.webp" },
+        { "nr": "18", "name": "Etli Güvec",       "description": "Lamm mit Gemüse in Tomatensauce",                          "price": "18,90" },
+        { "nr": "19", "name": "Tavuk Sote",       "description": "Hähnchen, Gemüse, mit Käse überbacken",                    "price": "18,90" },
+        { "nr": "20", "name": "Tavuk Sis",        "description": "Hähnchenbrustfiletspieß",                                  "price": "16,90", "image": "/images/tavuk_sis.webp" },
+        { "nr": "21", "name": "Tavuk Kanat",      "description": "Würzige Hähnchenflügel",                                   "price": "15,90" },
+        { "nr": "",   "name": "Atesh Cevapcici",  "description": "10 hausgemachte Cevapcici mit Fladenbrot, Joghurt-Dip und Bulgur", "price": "21,90", "highlight": true, "image": "/images/cevapcici.webp" }
+      ]
+    },
+    {
+      "name": "Burger",
+      "items": [
+        { "nr": "25", "name": "Atesh Burger",          "description": "200g Angus Beef, Cheddar",                   "price": "14,90", "highlight": true, "image": "/images/atesh_burger.webp" },
+        { "nr": "26", "name": "Texas Burger",          "description": "200g Angus, Double Cheddar, Jalapeños",       "price": "15,90", "image": "/images/texas_burger.wepb.webp" },
+        { "nr": "27", "name": "Cheddar Chicken Burger","description": "135g Crispy Chicken, Cheddar",               "price": "13,90" },
+        { "nr": "28", "name": "Veggi Burger",          "description": "Sunny Veggi Patty, Burgersauce",              "price": "11,90" },
+        { "nr": "29", "name": "Falafel Burger",        "description": "Falafel, Rucola, Humus",                      "price": "12,90" }
+      ]
+    },
+    {
+      "name": "Dessert",
+      "items": [
+        { "nr": "31", "name": "Atesh Love",    "description": "Grießbrei, Frischkäse, Honig",            "price": "14,50", "highlight": true },
+        { "nr": "32", "name": "Antep Katmer", "description": "Teigtasche mit Pistazien und Frischkäse", "price": "10,90" }
+      ]
+    },
+    {
+      "name": "Getränke",
+      "items": [
+        { "nr": "", "name": "Cola 0,33l",             "description": "MEHRWEG",  "price": "3,75" },
+        { "nr": "", "name": "Sprite 0,33l",           "description": "MEHRWEG",  "price": "3,75" },
+        { "nr": "", "name": "Fanta 0,33l",            "description": "",         "price": "3,90" },
+        { "nr": "", "name": "Elephant Bay Peach 0,33l","description": "MEHRWEG", "price": "3,75" },
+        { "nr": "", "name": "Nigde Gazoz 0,25l",      "description": "",         "price": "3,10" }
+      ]
+    }
+  ]
+}
