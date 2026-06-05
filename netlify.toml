@@ -1,5 +1,5 @@
 [build]
-  command = "npx astro build"
+  command = "npm ci && node ./node_modules/astro/bin/astro.js build"
   publish = "dist"
 
 [build.environment]
