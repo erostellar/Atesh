@@ -40,7 +40,16 @@
       "Bash(python - <<'EOF'\nimport fitz\nimport os\n\npdf_path = r\"C:\\\\Users\\\\kapla\\\\Desktop\\\\Atesh media\\\\ATESH GRILL & RESTAURANT Menukarte v7.pdf\"\nout_dir = r\"C:\\\\Users\\\\kapla\\\\astro-atesh\\\\public\\\\images\\\\menu\"\n\nos.makedirs\\(out_dir, exist_ok=True\\)\n\ndoc = fitz.open\\(pdf_path\\)\nprint\\(f\"Seiten: {len\\(doc\\)}\"\\)\n\nfor i, page in enumerate\\(doc\\):\n    mat = fitz.Matrix\\(2.0, 2.0\\)\n    pix = page.get_pixmap\\(matrix=mat\\)\n    out_path = os.path.join\\(out_dir, f\"seite_{i+1:02d}.jpg\"\\)\n    pix.save\\(out_path, jpg_quality=88\\)\n    print\\(f\"  Seite {i+1}: {pix.width}x{pix.height}px -> {out_path}\"\\)\n\ndoc.close\\(\\)\nprint\\(\"Fertig!\"\\)\nEOF)",
       "Bash(claude install:*)",
       "Bash(npm install:*)",
-      "Bash(npm list:*)"
+      "Bash(npm list:*)",
+      "WebFetch(domain:atesh-bremen.de)",
+      "PowerShell(python -c \"import fitz; doc = fitz.open\\(r'C:\\\\Users\\\\kapla\\\\Desktop\\\\Atesh media\\\\MENÜ MITTAG.pdf'\\); print\\(len\\(doc\\), 'pages'\\)\")",
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\kapla\\\\astro-atesh\\\\public\\\\images\\\\menu-mittag\\\\\" | Select-Object Name, @{N='Size\\(KB\\)';E={[math]::Round\\($_.Length/1KB\\)}})",
+      "Skill(run)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4321/)",
+      "Bash(curl -s http://localhost:4321/)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)"
     ]
   }
 }
