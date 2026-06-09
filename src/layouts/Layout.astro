@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import '@fontsource/dm-sans/300.css';
 import CookieBanner from '../components/CookieBanner.astro';
+import PromoPopup from '../components/PromoPopup.astro';
 import '@fontsource/dm-sans/400.css';
 import '@fontsource/dm-sans/500.css';
 import '@fontsource/dm-sans/600.css';
@@ -30,6 +31,7 @@ const { title = 'ATESH Grill & Restaurant', description = 'Modern Turkish · Ste
   <body>
     <slot />
     <CookieBanner />
+    <PromoPopup />
 
     <script>
       // Intersection Observer für scroll-reveal
