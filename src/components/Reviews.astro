@@ -1,0 +1,156 @@
+---
+const reviews = [
+  { text: "Ein wunderbares Erlebnis.",              name: "Mehmet U.", url: "https://maps.app.goo.gl/KZaba6M1bjSaNUZ87" },
+  { text: "Der Besuch hat sich absolut gelohnt.",   name: "Maria M.",  url: "https://maps.app.goo.gl/o1ZpFwrqM5yToemp9" },
+  { text: "Überzeugt auf ganzer Linie.",            name: "Katharina K.", url: "https://maps.app.goo.gl/g4cB9ueaMD3v3Jwk7" },
+  { text: "Ein absoluter Genuss!",                  name: "Ha H.",     url: "https://maps.app.goo.gl/GAdsLAxiNaoN8HAC6" },
+  { text: "Waren rundum begeistert.",               name: "Leyla B.",  url: "https://maps.app.goo.gl/J9PmDhJ8NaCiybEM9" },
+  { text: "Meze super, Fleisch noch besser.",       name: "A. G.",     url: "https://maps.app.goo.gl/LmbUDN4rVkYJJi997" },
+];
+---
+
+<div class="reviews-strip">
+  <!-- Fade edges -->
+  <div class="fade fade-left"></div>
+  <div class="fade fade-right"></div>
+
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      {[...reviews, ...reviews].map((r) => (
+        <a
+          class="review-item"
+          href={r.url}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <!-- Google G -->
+          <svg class="g-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+          </svg>
+          <!-- Stars -->
+          <span class="stars">★★★★★</span>
+          <!-- Quote -->
+          <p class="review-text">„{r.text}"</p>
+          <span class="review-name">— {r.name}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .reviews-strip {
+    position: relative;
+    background: #110B07;
+    border-top: 1px solid rgba(74, 55, 40, 0.7);
+    border-bottom: 1px solid rgba(74, 55, 40, 0.7);
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .fade {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 120px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .fade-left {
+    left: 0;
+    background: linear-gradient(to right, #110B07 0%, transparent 100%);
+  }
+  .fade-right {
+    right: 0;
+    background: linear-gradient(to left, #110B07 0%, transparent 100%);
+  }
+
+  .ticker-wrap {
+    overflow: hidden;
+    padding: 14px 0;
+  }
+
+  .ticker-track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    animation: ticker 90s linear infinite;
+    gap: 0;
+  }
+  .ticker-track:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  .review-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 48px;
+    white-space: nowrap;
+    border-right: 1px solid rgba(74, 55, 40, 0.5);
+    flex-shrink: 0;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .review-item:hover {
+    opacity: 0.75;
+  }
+
+  .g-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    opacity: 0.85;
+  }
+
+  .stars {
+    color: #C4953A;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    flex-shrink: 0;
+  }
+
+  .review-text {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    color: #B8A99A;
+    margin: 0;
+    max-width: 340px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .review-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    color: #C4953A;
+    opacity: 0.8;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 768px) {
+    .fade {
+      width: 60px;
+    }
+    .review-item {
+      padding: 0 32px;
+      gap: 8px;
+    }
+    .review-text {
+      max-width: 220px;
+      font-size: 0.75rem;
+    }
+    .stars {
+      font-size: 0.65rem;
+    }
+  }
+</style>
