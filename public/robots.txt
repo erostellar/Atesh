@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://atesh-bremen.de/sitemap-index.xml

@@ -22,11 +22,68 @@ const { title = 'ATESH Grill & Restaurant', description = 'Modern Turkish · Ste
 <html lang="de">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary Meta -->
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://atesh-bremen.de" />
+    <meta name="theme-color" content="#1A110C" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="restaurant" />
+    <meta property="og:site_name" content="ATESH Grill & Restaurant" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content="https://atesh-bremen.de" />
+    <meta property="og:image" content="https://atesh-bremen.de/images/drausse_front.jpeg" />
+    <meta property="og:image:width" content="1152" />
+    <meta property="og:image:height" content="2048" />
+    <meta property="og:locale" content="de_DE" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://atesh-bremen.de/images/drausse_front.jpeg" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- JSON-LD: Restaurant -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Restaurant",
+      "name": "ATESH Grill & Restaurant",
+      "description": "Authentische türkische Grillküche in Bremen-Vegesack. Modern Turkish · Steakhouse.",
+      "url": "https://atesh-bremen.de",
+      "telephone": "+4942117241862",
+      "email": "info@atesh-bremen.de",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Vegesacker Straße 16-18",
+        "addressLocality": "Bremen",
+        "postalCode": "28217",
+        "addressCountry": "DE"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 53.09597432437165,
+        "longitude": 8.78587807651589
+      },
+      "openingHoursSpecification": [{
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+        "opens": "12:00",
+        "closes": "00:00"
+      }],
+      "servesCuisine": ["Türkisch", "Steakhouse", "Grill"],
+      "priceRange": "€€",
+      "image": "https://atesh-bremen.de/images/drausse_front.jpeg",
+      "sameAs": ["https://www.instagram.com/atesh.bremen/"]
+    })} />
   </head>
   <body>
     <slot />
