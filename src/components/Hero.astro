@@ -59,6 +59,17 @@
       >
         Online Bestellen
       </a>
+      <div class="w-full sm:w-auto flex justify-center">
+        <script is:inline src="https://tech.bon-bon.de/banner/assets/bonbon-bb2_ml.js"></script>
+        <script is:inline>
+          bonbon.addBanner(
+            'https://www.bon-bon.de/gutschein/atesh-grill-restaurant/',
+            // BON BON prepends the hash to these hex values.
+            '1A110C',
+            'C4953A'
+          );
+        </script>
+      </div>
     </div>
   </div>
 
@@ -69,3 +80,75 @@
     </svg>
   </div>
 </section>
+
+<style>
+  :global(body:has(.bonbon_container)) {
+    --atesh-voucher-edge: 1.75rem;
+    --atesh-voucher-gap: 0.5rem;
+    --atesh-voucher-width: min(240px, calc(100vw - var(--atesh-voucher-edge) - var(--atesh-voucher-edge) - 52px - var(--atesh-voucher-gap)));
+  }
+
+  /* BON BON appends its widget to body, outside Astro's scoped markup. */
+  :global(body .bonbon_container) {
+    --atesh-voucher-bottom: calc(var(--atesh-voucher-edge) + 52px + 1rem);
+    bottom: calc(var(--atesh-voucher-edge) + 2px);
+    right: var(--atesh-voucher-edge);
+    left: auto;
+    transform: none;
+    padding-right: 0;
+    width: var(--atesh-voucher-width);
+  }
+
+  :global(body .bonbon_container .bonbon_ibc) {
+    margin: 0;
+  }
+
+  /* Use the promotion trigger's existing reveal state and animation timing. */
+  :global(body .bonbon_container .bonbon_ibc:not(.slide-up)) {
+    opacity: 0;
+    transform: scale(0.6);
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  :global(body:has(#promo-trigger.visible) .bonbon_container .bonbon_ibc:not(.slide-up)) {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+  }
+
+  :global(body:has(.bonbon_container) #promo-trigger) {
+    bottom: var(--atesh-voucher-edge);
+    right: calc(var(--atesh-voucher-edge) + var(--atesh-voucher-width) + var(--atesh-voucher-gap));
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s,
+      right 0.5s ease-out, bottom 0.5s ease-out;
+  }
+
+  /* BON BON toggles slide-up itself; keep the circle next to the open popup. */
+  :global(body:has(.bonbon_container .bonbon_puc.slide-up) #promo-trigger) {
+    right: var(--atesh-voucher-edge);
+    bottom: calc(var(--atesh-voucher-edge) + 1rem - var(--atesh-voucher-gap));
+  }
+
+  :global(body .bonbon_container .bonbon_puc) {
+    position: absolute;
+    /* Preserve the popup's previous position above the floating controls. */
+    bottom: calc(52px + 1rem - 2px);
+    right: 0;
+    left: auto;
+    width: min(320px, calc(100vw - var(--atesh-voucher-edge) - var(--atesh-voucher-edge)));
+    max-height: calc(100dvh - var(--atesh-voucher-bottom) - 1rem);
+    overflow-y: auto;
+    transform: translateY(100%);
+  }
+
+  :global(body .bonbon_container .bonbon_puc.slide-up) {
+    transform: translateY(0);
+  }
+
+  @media (max-width: 480px) {
+    :global(body:has(.bonbon_container)) {
+      --atesh-voucher-edge: 1.25rem;
+    }
+  }
+</style>
